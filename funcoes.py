@@ -1,15 +1,18 @@
+from texttable import Texttable
+import numpy as np
+
 def inserir_matriz(matriz, restricao, pos_linha, array_pos):
     qtdColunas = len(matriz[0])
     vet_aux = [0] * qtdColunas
     tam = len(restricao)
 
-    for i in range(len(array_pos)):
+    for i in range(len(array_pos)): # 
         pos = array_pos[i]
         vet_aux[pos] = restricao[i] 
     vet_aux[qtdColunas-1] = restricao[tam-1]
 
     for i in range(qtdColunas):
-        matriz[pos_linha][i] = vet_aux[i]
+        matriz[pos_linha][i] = float(vet_aux[i])
                 
     return matriz
 
@@ -105,3 +108,15 @@ def verifica_matriz(matriz):
         if (matriz[0][i] < 0):
             return True
     return False
+
+def imprime_matriz(matriz, cabecalho, qtdColunas):
+    linha = [0] * qtdColunas
+    qtdeCol = ['t'] * qtdColunas 
+    imprimir = np.insert(matriz, 0, linha, axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
+    tabela = Texttable()
+    tabela.set_cols_dtype(qtdeCol)
+    tabela.add_rows(imprimir)
+    tabela.add_rows([cabecalho])
+    print("")
+    print(tabela.draw())
+    return None
