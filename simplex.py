@@ -8,12 +8,21 @@ objetiva, qtdVariaveis = funcao_objetiva(func_obj)
 
 qtdRestricoes = int(input("Quantidade de restricoes: "))
 qtdColunas = qtdVariaveis + qtdRestricoes
-matriz = np.zeros((qtdRestricoes + 1, qtdColunas))
-cabecalho = [None] * qtdColunas
-
 qtdLinhas = qtdRestricoes + 1
 
+matriz = np.zeros((qtdLinhas, qtdColunas)) # INICIALIZANDO A MATRIZ
+
+for i in range(qtdVariaveis-1): # INSERINDO FUNÇÃO OBJETIVA NA MATRIZ
+    matriz[0][i] = objetiva[i]
+
+for i in range(1,qtdRestricoes+1): # INSERINDO AS RESTRIÇÕES NA MATRIZ
+    restr = input("Restricao {} = ".format(i))
+    restricao = calc_restricao(restr)
+    matriz = inserir_matriz(matriz, restricao, i)
+    matriz[i][(qtdVariaveis-2)+i] = 1
+
 # DEFINE O CABEÇALHO
+cabecalho = [None] * qtdColunas
 cabecalho[0] = str('Z')
 cabecalho[qtdColunas - 1] = 'S'
 for i in range(1, qtdVariaveis - 1):
@@ -23,27 +32,6 @@ for i in range(qtdVariaveis - 1, qtdColunas - 1):
     cabecalho[i] = 'F%d' % j
     j += 1
 
-matriz[0][0] = 1
-matriz[0][1] = -600
-matriz[0][2] = -800
-
-matriz[1][1] = 1
-matriz[1][2] = 1
-matriz[1][3] = 1
-matriz[1][7] = 100
-
-matriz[2][1] = 3
-matriz[2][2] = 2
-matriz[2][4] = 1
-matriz[2][7] = 235
-
-matriz[3][1] = 8
-matriz[3][5] = 1
-matriz[3][7] = 480
-
-matriz[4][2] = 10
-matriz[4][6] = 1
-matriz[4][7] = 800
 
 qtdeCol = ['t'] * qtdColunas  # FORMATO PARA IMPRIMIR A TABELA
 imprimir = np.insert(matriz, 0, matriz[0], axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
@@ -73,5 +61,4 @@ while verifica_matriz(matriz):
     print("")
 
     print(tabela.draw())
-
 
