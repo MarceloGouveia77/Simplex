@@ -32,17 +32,7 @@ for i in range(qtdVariaveis - 1, qtdColunas - 1):
     cabecalho[i] = 'F%d' % j
     j += 1
 
-
-qtdeCol = ['t'] * qtdColunas  # FORMATO PARA IMPRIMIR A TABELA
-imprimir = np.insert(matriz, 0, matriz[0], axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
-tabela = Texttable()
-tabela.set_cols_dtype(qtdeCol)
-tabela.add_rows(imprimir)
-tabela.add_rows([cabecalho])
-print("")
-
-print(tabela.draw())
-
+imprime_matriz(matriz, cabecalho, qtdColunas)
 while verifica_matriz(matriz):
     c_entra = coluna_entra(matriz)  # PEGA A POSIÇÃO DA COLUNA QUE ENTRA
     print("ENTRA: ", cabecalho[c_entra])
@@ -53,12 +43,5 @@ while verifica_matriz(matriz):
     for i in range(qtdLinhas):  # CALCULA AS NOVAS LINHAS
         matriz[i] = calc_nova_linha(matriz, nova_linha, c_entra, i, linha_pivo)
 
-    imprimir = np.insert(matriz, 0, nova_linha, axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
-    tabela = Texttable()
-    tabela.set_cols_dtype(qtdeCol)
-    tabela.add_rows(imprimir)
-    tabela.add_rows([cabecalho])
-    print("")
-
-    print(tabela.draw())
+    imprime_matriz(matriz, cabecalho, qtdColunas)    
 
