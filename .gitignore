@@ -3,6 +3,7 @@ Thumbs.db
 ehthumbs.db
 
 /__pycache__
+/.idea
 
 # Folder config file
 Desktop.ini
