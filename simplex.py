@@ -1,28 +1,25 @@
 # -*- coding: latin-1 -*-
 from funcoes import *
-from DBconnection import *
-from matplotlib import pyplot as plt
 from texttable import Texttable
 import numpy as np
-from parse import *
 
 qtdVariaveis = int(input("Quantidade de variaveis: ")) + 2
 qtdRestricoes = int(input("Quantidade de restricoes: "))
 qtdColunas = qtdVariaveis + qtdRestricoes
-matriz = np.zeros((qtdRestricoes+1,qtdColunas))
+matriz = np.zeros((qtdRestricoes + 1, qtdColunas))
 cabecalho = [None] * qtdColunas
 
-qtdLinhas = qtdRestricoes+1
+qtdLinhas = qtdRestricoes + 1
 
 # DEFINE O CABEÇALHO
 cabecalho[0] = str('Z')
-cabecalho[qtdColunas-1] = 'S'
-for i in range(1,qtdVariaveis-1):
-	cabecalho[i] = 'x%d' %i
+cabecalho[qtdColunas - 1] = 'S'
+for i in range(1, qtdVariaveis - 1):
+    cabecalho[i] = 'x%d' % i
 j = 1
-for i in range(qtdVariaveis-1,qtdColunas-1):
-	cabecalho[i] = 'F%d' %j
-	j+=1
+for i in range(qtdVariaveis - 1, qtdColunas - 1):
+    cabecalho[i] = 'F%d' % j
+    j += 1
 
 matriz[0][0] = 1
 matriz[0][1] = -600
@@ -46,22 +43,33 @@ matriz[4][2] = 10
 matriz[4][6] = 1
 matriz[4][7] = 800
 
-while(verifica_matrix(matriz)):
-	c_entra = coluna_entra(matriz) # PEGA A POSIÇÃO DA COLUNA QUE ENTRA
-	nova_linha, linha_pivo = nova_linha_pivo(matriz, qtdLinhas, c_entra) # CALCULA A NOVA LINHA PIVO, E RETORNA A POSIÇÃO DA LINHA
+qtdeCol = ['t'] * qtdColunas  # FORMATO PARA IMPRIMIR A TABELA
+imprimir = np.insert(matriz, 0, matriz[0], axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
+tabela = Texttable()
+tabela.set_cols_dtype(qtdeCol)
+tabela.add_rows(imprimir)
+tabela.add_rows([cabecalho])
+print("")
 
-	for i in range(qtdLinhas): # CALCULA AS NOVAS LINHAS
-		matriz[i] = calc_nova_linha(matriz, nova_linha, c_entra, i, linha_pivo)
+print(tabela.draw())
 
-	qtdeCol = ['t'] * qtdColunas # FORMATO PARA IMPRIMIR A TABELA
+while verifica_matriz(matriz):
+    c_entra = coluna_entra(matriz)  # PEGA A POSIÇÃO DA COLUNA QUE ENTRA
+    print("ENTRA: ", cabecalho[c_entra])
+    nova_linha, linha_pivo = nova_linha_pivo(matriz, qtdLinhas,
+                                             c_entra)  # CALCULA A NOVA LINHA PIVO, E RETORNA A POSIÇÃO DA LINHA
+    print("LINHA PIVO: ", nova_linha)
 
-	imprimir = np.insert(matriz, 0, nova_linha, axis=0) # MATRIZ AUXILIAR PARA IMPRESSÃO
-	tabela = Texttable()
-	tabela.set_cols_dtype(qtdeCol)
-	tabela.add_rows(imprimir)
-	tabela.add_rows([cabecalho])
-	print("")
+    for i in range(qtdLinhas):  # CALCULA AS NOVAS LINHAS
+        matriz[i] = calc_nova_linha(matriz, nova_linha, c_entra, i, linha_pivo)
 
-	print(tabela.draw())
+    imprimir = np.insert(matriz, 0, nova_linha, axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
+    tabela = Texttable()
+    tabela.set_cols_dtype(qtdeCol)
+    tabela.add_rows(imprimir)
+    tabela.add_rows([cabecalho])
+    print("")
 
-#print(np.array_str(matriz, precision = 2, suppress_small = True))
+    print(tabela.draw())
+
+
