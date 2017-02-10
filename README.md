@@ -1,5 +1,5 @@
 # Simplex
-Repositório que calcula o simplex com restrições &lt;= 
+Algoritmo que calcula o simplex com restrições &lt;= 
 
 # Exemplo de entrada
 Função objetiva: 600x1 + 800x2
