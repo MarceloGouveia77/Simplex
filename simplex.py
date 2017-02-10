@@ -3,7 +3,9 @@ from funcoes import *
 from texttable import Texttable
 import numpy as np
 
-qtdVariaveis = int(input("Quantidade de variaveis: ")) + 2
+func_obj = input("Funcao Objetiva: ")
+objetiva, qtdVariaveis = funcao_objetiva(func_obj)
+
 qtdRestricoes = int(input("Quantidade de restricoes: "))
 qtdColunas = qtdVariaveis + qtdRestricoes
 matriz = np.zeros((qtdRestricoes + 1, qtdColunas))

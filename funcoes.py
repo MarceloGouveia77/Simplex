@@ -1,3 +1,25 @@
+def funcao_objetiva(objetiva):
+    objetiva = objetiva.split(" ")
+    tam = len(objetiva)
+    string_aux = [None] * tam
+
+    for i in range(tam):
+        string_tmp = objetiva[i]
+        if(len(string_tmp) >= 3):
+            string_aux[i] = string_tmp
+
+    for i in range(tam):
+        if(string_aux[i] != None):
+            pos = len(string_aux[i]) -2
+            string_aux[i] = int(string_aux[i][:pos]) * (-1)
+
+    string_aux = [x for x in string_aux if x is not None]
+    qtd_variaveis = len(string_aux) + 2
+    return string_aux, qtd_variaveis
+
+def calc_restricao(restr):
+    
+
 def coluna_entra(matriz):
     qtdColunas = len(matriz[0])
     menor = 0
