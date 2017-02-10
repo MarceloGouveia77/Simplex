@@ -17,8 +17,8 @@ for i in range(qtdVariaveis-1): # INSERINDO FUNÇÃO OBJETIVA NA MATRIZ
 
 for i in range(1,qtdRestricoes+1): # INSERINDO AS RESTRIÇÕES NA MATRIZ
     restr = input("Restricao {} = ".format(i))
-    restricao = calc_restricao(restr)
-    matriz = inserir_matriz(matriz, restricao, i)
+    restricao, array_pos = calc_restricao(restr)
+    matriz = inserir_matriz(matriz, restricao, i, array_pos)
     matriz[i][(qtdVariaveis-2)+i] = 1
 
 # DEFINE O CABEÇALHO
