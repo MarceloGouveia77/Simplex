@@ -1,13 +1,12 @@
-def inserir_matriz(matriz, restricao, pos_linha):
+def inserir_matriz(matriz, restricao, pos_linha, array_pos):
     qtdColunas = len(matriz[0])
     vet_aux = [0] * qtdColunas
     tam = len(restricao)
 
-    for i in range(tam):
-        if(i == tam-1):
-            vet_aux[qtdColunas-1] = restricao[i]
-            break
-        vet_aux[i] = restricao[i]
+    for i in range(len(array_pos)):
+        pos = array_pos[i]
+        vet_aux[pos] = restricao[i] 
+    vet_aux[qtdColunas-1] = restricao[tam-1]
 
     for i in range(qtdColunas):
         matriz[pos_linha][i] = vet_aux[i]
@@ -17,46 +16,54 @@ def inserir_matriz(matriz, restricao, pos_linha):
 def funcao_objetiva(objetiva):
     objetiva = objetiva.split(" ")
     tam = len(objetiva)
-    string_aux = [None] * tam
+    array_aux = [None] * tam
 
     for i in range(tam):
         string_tmp = objetiva[i]
         if(len(string_tmp) >= 3):
-            string_aux[i] = string_tmp
+            array_aux[i] = string_tmp
 
     for i in range(tam):
-        if(string_aux[i] != None):
-            pos = len(string_aux[i]) -2
-            string_aux[i] = int(string_aux[i][:pos]) * (-1)
+        if(array_aux[i] != None):
+            pos = len(array_aux[i]) -2
+            array_aux[i] = int(array_aux[i][:pos]) * (-1)
 
-    string_aux = [x for x in string_aux if x is not None]
-    qtd_variaveis = len(string_aux) + 2
-    string_aux = [1] + string_aux
-    return string_aux, qtd_variaveis
+    array_aux = [x for x in array_aux if x is not None]
+    qtd_variaveis = len(array_aux) + 2
+    array_aux = [1] + array_aux
+    return array_aux, qtd_variaveis
+
+def calc_pos(string):
+    tam = len(string)
+    pos = int(string[tam-1:])
+    return pos
 
 def calc_restricao(restr):
     restr = restr.split(" ")
     tam = len(restr)
-    string_aux = [None] * tam
+    array_aux = [None] * tam
+    array_pos = [None] * tam
 
     for i in range(tam):
         string_tmp = restr[i]
         if(i == tam-1):
-            string_aux[i] = string_tmp
+            array_aux[i] = string_tmp
             break
         if(len(string_tmp) >= 3):
-            string_aux[i] = string_tmp
+            array_pos[i] = calc_pos(string_tmp)
+            array_aux[i] = string_tmp
 
     for i in range(tam):
         if(i == (tam - 1)):
             break
-        if(string_aux[i] != None):
-            pos = len(string_aux[i]) -2
-            string_aux[i] = string_aux[i] = string_aux[i][:pos]
+        if(array_aux[i] != None):
+            pos = len(array_aux[i]) -2
+            array_aux[i] = array_aux[i][:pos]
 
-    string_aux = [x for x in string_aux if x is not None]
-    string_aux = [0] + string_aux
-    return string_aux
+    array_aux = [x for x in array_aux if x is not None]
+    array_pos = [x for x in array_pos if x is not None]
+    #array_aux = [0] + array_aux
+    return array_aux, array_pos
 
 def coluna_entra(matriz):
     qtdColunas = len(matriz[0])
