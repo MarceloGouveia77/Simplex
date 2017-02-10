@@ -10,7 +10,7 @@ qtdRestricoes = int(input("Quantidade de restricoes: "))
 qtdColunas = qtdVariaveis + qtdRestricoes
 qtdLinhas = qtdRestricoes + 1
 
-matriz = np.zeros((qtdLinhas, qtdColunas)) # INICIALIZANDO A MATRIZ
+matriz = np.zeros((qtdLinhas, qtdColunas)) 
 
 for i in range(qtdVariaveis-1): # INSERINDO FUNÇÃO OBJETIVA NA MATRIZ
     matriz[0][i] = objetiva[i]
