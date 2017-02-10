@@ -1,40 +1,45 @@
 from texttable import Texttable
 import numpy as np
 
-def inserir_matriz(matriz, restricao, pos_linha, array_pos):
+def inserir_matriz(matriz, restricao, pos_linha, lista_pos):
     qtdColunas = len(matriz[0])
-    vet_aux = [0] * qtdColunas
+    lista_aux = [0] * qtdColunas
     tam = len(restricao)
 
-    for i in range(len(array_pos)): # 
-        pos = array_pos[i]
-        vet_aux[pos] = restricao[i] 
-    vet_aux[qtdColunas-1] = restricao[tam-1]
+    for i in range(len(lista_pos)): # 
+        pos = lista_pos[i]
+        lista_aux[pos] = restricao[i] 
+    lista_aux[qtdColunas-1] = restricao[tam-1]
 
     for i in range(qtdColunas):
-        matriz[pos_linha][i] = float(vet_aux[i])
+        matriz[pos_linha][i] = float(lista_aux[i])
                 
     return matriz
 
 def funcao_objetiva(objetiva):
     objetiva = objetiva.split(" ")
     tam = len(objetiva)
-    array_aux = [None] * tam
+    lista_aux = [None] * tam
+
+    for i in range(len(objetiva)): # DETECTA SINAL NEGATIVO E APLICA À VARIAVEL
+        if(objetiva[i] == '-'):
+            tmp = restr[i+1]
+            objetiva[i+1] = '-' + tmp
 
     for i in range(tam):
         string_tmp = objetiva[i]
         if(len(string_tmp) >= 3):
-            array_aux[i] = string_tmp
+            lista_aux[i] = string_tmp
 
     for i in range(tam):
-        if(array_aux[i] != None):
-            pos = len(array_aux[i]) -2
-            array_aux[i] = int(array_aux[i][:pos]) * (-1)
+        if(lista_aux[i] != None):
+            pos = len(lista_aux[i]) -2
+            lista_aux[i] = int(lista_aux[i][:pos]) * (-1)
 
-    array_aux = [x for x in array_aux if x is not None]
-    qtd_variaveis = len(array_aux) + 2
-    array_aux = [1] + array_aux
-    return array_aux, qtd_variaveis
+    lista_aux = [x for x in lista_aux if x is not None]
+    qtd_variaveis = len(lista_aux) + 2
+    lista_aux = [1] + lista_aux
+    return lista_aux, qtd_variaveis
 
 def calc_pos(string):
     tam = len(string)
@@ -44,29 +49,33 @@ def calc_pos(string):
 def calc_restricao(restr):
     restr = restr.split(" ")
     tam = len(restr)
-    array_aux = [None] * tam
-    array_pos = [None] * tam
+    lista_aux = [None] * tam
+    lista_pos = [None] * tam
 
-    for i in range(tam):
+    for i in range(len(restr)): # DETECTA SINAL NEGATIVO E APLICA À VARIAVEL
+        if(restr[i] == '-'):
+            tmp = restr[i+1]
+            restr[i+1] = '-' + tmp
+
+    for i in range(tam): 
         string_tmp = restr[i]
         if(i == tam-1):
-            array_aux[i] = string_tmp
+            lista_aux[i] = string_tmp
             break
         if(len(string_tmp) >= 3):
-            array_pos[i] = calc_pos(string_tmp)
-            array_aux[i] = string_tmp
+            lista_pos[i] = calc_pos(string_tmp) # CALCULA EM QUAL POS VAI CADA VARIÁVEL 
+            lista_aux[i] = string_tmp
 
-    for i in range(tam):
+    for i in range(tam): # FILTRA APENAS OS NÚMEROS DA RESTRICAO
         if(i == (tam - 1)):
             break
-        if(array_aux[i] != None):
-            pos = len(array_aux[i]) -2
-            array_aux[i] = array_aux[i][:pos]
+        if(lista_aux[i] != None):
+            pos = len(lista_aux[i]) -2
+            lista_aux[i] = lista_aux[i][:pos]
 
-    array_aux = [x for x in array_aux if x is not None]
-    array_pos = [x for x in array_pos if x is not None]
-    #array_aux = [0] + array_aux
-    return array_aux, array_pos
+    lista_aux = [x for x in lista_aux if x is not None]
+    lista_pos = [x for x in lista_pos if x is not None]
+    return lista_aux, lista_pos
 
 def coluna_entra(matriz):
     qtdColunas = len(matriz[0])
@@ -112,7 +121,7 @@ def verifica_matriz(matriz):
 def imprime_matriz(matriz, cabecalho, qtdColunas):
     linha = [0] * qtdColunas
     qtdeCol = ['t'] * qtdColunas 
-    imprimir = np.insert(matriz, 0, linha, axis=0)  # MATRIZ AUXILIAR PARA IMPRESSÃO
+    imprimir = np.insert(matriz, 0, linha, axis=0)  # LISTA AUXILIAR PARA IMPRESSÃO
     tabela = Texttable()
     tabela.set_cols_dtype(qtdeCol)
     tabela.add_rows(imprimir)
