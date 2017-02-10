@@ -1,3 +1,19 @@
+def inserir_matriz(matriz, restricao, pos_linha):
+    qtdColunas = len(matriz[0])
+    vet_aux = [0] * qtdColunas
+    tam = len(restricao)
+
+    for i in range(tam):
+        if(i == tam-1):
+            vet_aux[qtdColunas-1] = restricao[i]
+            break
+        vet_aux[i] = restricao[i]
+
+    for i in range(qtdColunas):
+        matriz[pos_linha][i] = vet_aux[i]
+                
+    return matriz
+
 def funcao_objetiva(objetiva):
     objetiva = objetiva.split(" ")
     tam = len(objetiva)
@@ -15,6 +31,7 @@ def funcao_objetiva(objetiva):
 
     string_aux = [x for x in string_aux if x is not None]
     qtd_variaveis = len(string_aux) + 2
+    string_aux = [1] + string_aux
     return string_aux, qtd_variaveis
 
 def calc_restricao(restr):
@@ -38,7 +55,8 @@ def calc_restricao(restr):
             string_aux[i] = string_aux[i] = string_aux[i][:pos]
 
     string_aux = [x for x in string_aux if x is not None]
-    print(string_aux)
+    string_aux = [0] + string_aux
+    return string_aux
 
 def coluna_entra(matriz):
     qtdColunas = len(matriz[0])
