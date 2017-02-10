@@ -18,7 +18,27 @@ def funcao_objetiva(objetiva):
     return string_aux, qtd_variaveis
 
 def calc_restricao(restr):
-    
+    restr = restr.split(" ")
+    tam = len(restr)
+    string_aux = [None] * tam
+
+    for i in range(tam):
+        string_tmp = restr[i]
+        if(i == tam-1):
+            string_aux[i] = string_tmp
+            break
+        if(len(string_tmp) >= 3):
+            string_aux[i] = string_tmp
+
+    for i in range(tam):
+        if(i == (tam - 1)):
+            break
+        if(string_aux[i] != None):
+            pos = len(string_aux[i]) -2
+            string_aux[i] = string_aux[i] = string_aux[i][:pos]
+
+    string_aux = [x for x in string_aux if x is not None]
+    print(string_aux)
 
 def coluna_entra(matriz):
     qtdColunas = len(matriz[0])
