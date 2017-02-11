@@ -23,7 +23,7 @@ def funcao_objetiva(objetiva):
 
     for i in range(len(objetiva)): # DETECTA SINAL NEGATIVO E APLICA À VARIAVEL
         if(objetiva[i] == '-'):
-            tmp = restr[i+1]
+            tmp = objetiva[i+1]
             objetiva[i+1] = '-' + tmp
 
     for i in range(tam):
@@ -122,7 +122,7 @@ def verifica_matriz(matriz):
 
 def imprime_matriz(matriz, cabecalho, qtdColunas):
     linha = [0] * qtdColunas
-    qtdeCol = ['t'] * qtdColunas 
+    qtdeCol = ['t'] * qtdColunas # FORMATO DA TABELA 'TEXTO'
     imprimir = np.insert(matriz, 0, linha, axis=0)  # LISTA AUXILIAR PARA IMPRESSÃO
     tabela = Texttable()
     tabela.set_cols_dtype(qtdeCol)
