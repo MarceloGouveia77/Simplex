@@ -34,7 +34,7 @@ def funcao_objetiva(objetiva):
     for i in range(tam):
         if(lista_aux[i] != None):
             pos = len(lista_aux[i]) -2
-            lista_aux[i] = int(lista_aux[i][:pos]) * (-1)
+            lista_aux[i] = float(lista_aux[i][:pos]) * (-1)
 
     lista_aux = [x for x in lista_aux if x is not None]
     qtd_variaveis = len(lista_aux) + 2
@@ -92,7 +92,9 @@ def nova_linha_pivo(matriz, qtdLinhas, coluna):
     menor = 999999
     for i in range(1, qtdLinhas):
         if (matriz[i][coluna] != 0):
-            pivo_tmp = matriz[i][qtdColunas - 1] / matriz[i][coluna]
+            pivo_tmp = float(matriz[i][qtdColunas - 1] / matriz[i][coluna])
+        else:
+            continue
         if ((pivo_tmp >= 0) and (pivo_tmp < menor)):
             menor = pivo_tmp
             linha = i
