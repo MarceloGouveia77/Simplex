@@ -91,7 +91,7 @@ def nova_linha_pivo(matriz, qtdLinhas, coluna):
     qtdColunas = len(matriz[0])
     menor = 999999
     for i in range(1, qtdLinhas):
-        if (matriz[i][coluna] != 0):
+        if (matriz[i][coluna] >= 0):
             pivo_tmp = float(matriz[i][qtdColunas - 1] / matriz[i][coluna])
         else:
             continue
